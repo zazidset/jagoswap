@@ -1,0 +1,60 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JagoSwap — Giwa. Anytime. Anywhere.</title>
+<meta name="description" content="JagoSwap: a mobile-first swap on GIWA Sepolia built with the Ammora SDK. Giwa. Anytime. Anywhere.">
+<style>
+:root{--bg:#07131a;--card:#0f2129;--line:#1d3a46;--fg:#eef7f9;--mut:#8fb0ba;--acc:#00d0a4;--acc2:#ffb703}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--fg);
+background:radial-gradient(900px 500px at 80% -10%,#0e4b52 0,transparent 60%),radial-gradient(700px 400px at -10% 110%,#3b2a05 0,transparent 60%),var(--bg)}
+nav{display:flex;align-items:center;justify-content:space-between;padding:14px 18px}
+.logo{font-weight:900;font-size:22px;letter-spacing:.5px}.logo b{color:var(--acc)}
+button{border:0;border-radius:12px;font-weight:700;cursor:pointer;font-size:15px}
+#connect{background:#14323c;color:var(--fg);padding:10px 14px}
+.hero{text-align:center;padding:18px 16px 6px}.hero h1{margin:0;font-size:34px;line-height:1.1}.hero h1 span{color:var(--acc)}
+.hero p{color:var(--mut);margin:8px 0 0}
+.card{width:min(420px,calc(100% - 24px));margin:18px auto;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:16px}
+.box{background:#0a1a20;border:1px solid var(--line);border-radius:16px;padding:12px 14px;margin-top:8px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.lbl{font-size:13px;color:var(--mut)}.tok{background:#14323c;border-radius:999px;padding:6px 12px;font-weight:700;white-space:nowrap}
+input,select{background:transparent;border:0;color:var(--fg);font-size:28px;width:100%;outline:none;padding:4px 0}
+select{font-size:14px;background:#0a1a20;border:1px solid var(--line);border-radius:10px;padding:10px;margin-top:6px}
+#customPool{font-size:14px;border:1px solid var(--line);border-radius:10px;padding:10px;margin-top:6px}
+.arrow{text-align:center;margin:-6px 0;font-size:18px;color:var(--acc)}
+#max{background:none;color:var(--acc);font-size:12px;padding:0}
+#swap{width:100%;margin-top:12px;padding:15px;background:linear-gradient(90deg,var(--acc),#00a3c4);color:#012}
+#swap:disabled{opacity:.6}
+.info{font-size:13px;color:var(--mut);margin-top:10px;display:grid;gap:4px}.info .row b{color:var(--fg);font-weight:600}
+#status{font-size:13px;margin-top:8px;min-height:18px;color:var(--acc2)}#status.err{color:#ff6b6b}
+#refresh{background:none;color:var(--mut);font-size:13px;padding:0}
+ul{padding-left:18px;font-size:13px;color:var(--mut)}a{color:#7fdcff}
+.feat{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;padding:0 12px}.feat div{background:#0c1c23;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:13px;color:var(--mut)}
+footer{text-align:center;color:var(--mut);font-size:12px;padding:20px}
+</style></head><body>
+<nav><div class="logo">Jago<b>Swap</b></div><button id="connect">Connect</button></nav>
+<section class="hero"><h1>Giwa. <span>Anytime.</span> Anywhere.</h1><p>Swap on GIWA from any phone, routed through Ammora liquidity.</p></section>
+<section class="card">
+  <div class="row"><b>Swap</b><button id="refresh">↻ Refresh quote</button></div>
+  <div class="box">
+    <div class="row lbl"><span>You pay</span><span><span id="bal"></span> <button id="max">MAX</button></span></div>
+    <div class="row"><input id="amount" type="number" inputmode="decimal" step="0.0001" min="0" value="0.0001"><span class="tok">ETH</span></div>
+  </div>
+  <div class="arrow">↓</div>
+  <div class="box">
+    <div class="row lbl"><span>You receive (estimated)</span></div>
+    <div class="row"><input id="out" readonly placeholder="0.0"><span class="tok" id="outSym">MUSE</span></div>
+    <select id="pool"></select>
+    <div id="custom" hidden><input id="customPool" placeholder="Ammora pool address 0x…">
+      <select id="customModel"><option>concentrated</option><option>compounding</option><option>almm</option></select></div>
+  </div>
+  <div class="info">
+    <div class="row"><span>Rate</span><b id="rate">–</b></div>
+    <div class="row"><span>Minimum received (1% slippage)</span><b id="min">–</b></div>
+    <div class="row"><span>Quote block</span><b id="blk">–</b></div>
+  </div>
+  <div id="status"></div>
+  <button id="swap">Connect wallet</button>
+  <ul id="history"></ul>
+</section>
+<div class="feat"><div>⚡ Live quotes from Ammora pools</div><div>🔐 Signed in your own wallet</div><div>📱 Built for mobile</div></div>
+<footer>Built with @ammora-protocol/sdk 0.3.9 · GIWA Sepolia (chain 91342) · Testnet only, no real value.</footer>
+<script type="module" src="./app.js"></script>
+</body></html>
